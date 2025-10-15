@@ -9,11 +9,19 @@ export default defineConfig({
       name: "child1",
       filename: "remoteEntry.js",
       exposes: {
-        "./App": "./src/App.jsx",
+        "./App": "./src/App",
       },
-      shared: ["react", "react-dom"],
+      shared: {
+        react: { singleton: true, requiredVersion: "^19.1.1" },
+        "react-dom": { singleton: true, requiredVersion: "^19.1.1" },
+        "@mantine/core": { singleton: true, requiredVersion: "^8.3.5" },
+        "@mantine/hooks": { singleton: true, requiredVersion: "^8.3.5" },
+      },
     }),
   ],
+  resolve: {
+    dedupe: ["react", "react-dom", "@mantine/core", "@mantine/hooks"],
+  },
   server: {
     port: 3001,
   },
